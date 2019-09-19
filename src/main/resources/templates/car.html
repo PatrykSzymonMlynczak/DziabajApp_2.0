@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Siemano</title>
+</head>
+<body>
+
+<h1>Eloszka</h1>
+<p th:text="${name}"></p>
+
+
+<tr th:each="car: ${cars}">
+    <td th:text="${car.getModel()}"></td></br>
+    <td th:text="${car.getMark()}"></td></br>
+    <p>=================</p>
+</tr>
+
+<form th:action="@{/add-car}" th:object="${newCar}" method="post">
+    <p>Model: <input type="text" th:field="*{model}"></p>
+    <p>Mark: <input type="text" th:field="*{mark}"></p>
+    <p><input type="submit"></p>
+</form>
+
+</body>
+</html>
