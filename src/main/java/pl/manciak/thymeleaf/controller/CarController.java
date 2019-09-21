@@ -1,7 +1,6 @@
 package pl.manciak.thymeleaf.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,14 +30,12 @@ public class CarController {
     }
 
     @GetMapping("/car")
-    public ResponseEntity hello(Model model, Car car2){
+    public String hello(Model model){
 
         model.addAttribute("cars", cars);
         model.addAttribute("newCar", new Car());
-        model.addAttribute("c2", car2);
 
-       // return "car";
-        return new ResponseEntity<>("car", HttpStatus.OK);
+        return "car";
     }
 
     @PostMapping("/add-car")

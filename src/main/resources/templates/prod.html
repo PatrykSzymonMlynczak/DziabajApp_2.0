@@ -63,22 +63,20 @@
 <!-- Car app -->
 <!-- Car app -->
 
+    <h1>Baza Produktów</h1>
 
+    <div class="container bg-blue col-12 text-center">
+        <tr th:each="products: ${iterable}">
+            <td th:text="${products.getName()}"> </td> </br>
+            <td th:text="${products.getCalories()}">  </td> Calories,
+            <td th:text="${products.getFat()}">  </td> Fat,
+            <td th:text="${products.getProtein()}">  </td> Protein,
+            <td th:text="${products.getCarbohydrates()}">  </td> Carbohydrates,
+            <td th:text="${products.getPrice()}">  </td> Price,
+            <p>=================</p>
+        </tr>
+    </div>
 
-<h1>Eloszka</h1>
-
-
-<tr th:each="car: ${cars}">
-    <td th:text="${car.getModel()}"></td></br>
-    <td th:text="${car.getMark()}"></td></br>
-    <p>=================</p>
-</tr>
-
-<form th:action="@{/add-car}" th:object="${newCar}" method="post">
-    <p>Model: <input type="text" th:field="*{model}"></p>
-    <p>Mark: <input type="text" th:field="*{mark}"></p>
-    <p><input type="submit"></p>
-</form>
 
 <!-- Car app -->
 <!-- Car app -->

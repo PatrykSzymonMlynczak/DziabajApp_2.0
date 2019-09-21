@@ -33,6 +33,10 @@ public class ProductService {
         repo.deleteById(id);
     }
 
+    public void deleteByName(String name){
+        repo.deleteByName(name);
+    }
+
     public Product save (Product product){
         return repo.save(product);
     }

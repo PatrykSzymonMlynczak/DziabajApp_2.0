@@ -9,19 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class BootController {
+public class MainController {
     private String appMode;
-
-    @Autowired
-    public BootController(Environment environment){
-        appMode = environment.getProperty("app-mode");
-    }
 
 
     @RequestMapping("/start")
     public String test(Model model){
 
-
         return "start";
     }
+
 }
