@@ -1,4 +1,4 @@
-package pl.manciak.thymeleaf;
+package pl.manciak.thymeleaf.entity;
 
 public class Car {
 

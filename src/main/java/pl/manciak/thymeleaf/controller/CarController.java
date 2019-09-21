@@ -1,14 +1,15 @@
-package pl.manciak.thymeleaf;
+package pl.manciak.thymeleaf.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import pl.manciak.thymeleaf.entity.Car;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -19,7 +20,7 @@ public class CarController {
     public CarController() {
         Car car4 = new Car("VW", "golf");
         Car car1 = new Car("BMW", "e46");
-        Car car2 = new Car("fiat", "uno");
+        Car car2 = new Car("mój", "golfik");
         Car car3 = new Car("audi", "a5");
 
         cars = new ArrayList<>();
@@ -30,12 +31,14 @@ public class CarController {
     }
 
     @GetMapping("/car")
-    public String hello(Model model){
+    public ResponseEntity hello(Model model, Car car2){
 
         model.addAttribute("cars", cars);
         model.addAttribute("newCar", new Car());
+        model.addAttribute("c2", car2);
 
-        return "car";
+       // return "car";
+        return new ResponseEntity<>("car", HttpStatus.OK);
     }
 
     @PostMapping("/add-car")
