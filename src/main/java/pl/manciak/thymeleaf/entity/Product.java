@@ -1,5 +1,6 @@
 package pl.manciak.thymeleaf.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotEmpty(message = "Please provide a name")
     private String name;
     private Float calories;
     private Float carbohydrates;

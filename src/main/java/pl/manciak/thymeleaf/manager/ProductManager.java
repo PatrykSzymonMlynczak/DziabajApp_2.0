@@ -3,18 +3,18 @@ package pl.manciak.thymeleaf.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.manciak.thymeleaf.entity.Product;
-import pl.manciak.thymeleaf.service.ProductService;
+import pl.manciak.thymeleaf.service.ProductDataService;
 
 import java.util.HashMap;
 
 @Service
 public class ProductManager {
 
-    private ProductService productService;
+    private ProductDataService productDataService;
 
     @Autowired
-    public ProductManager(ProductService productService) {
-        this.productService = productService;
+    public ProductManager(ProductDataService productDataService) {
+        this.productDataService = productDataService;
     }
 
     public String summarizeProductPropertiesById(HashMap<String,String> productsIdsMap){
@@ -26,16 +26,26 @@ public class ProductManager {
 
         for (HashMap.Entry<String,String> entry : productsIdsMap.entrySet()) {
 
-            sumCal += (productService.findById(Long.parseLong(entry.getKey()))
+            sumCal += (productDataService.findById(Long.parseLong(entry.getKey()))
                     .map(Product::getCalories).orElse(0F))/100*Integer.parseInt(entry.getValue());
-            sumCarbo += (productService.findById(Long.parseLong(entry.getKey()))
+            sumCarbo += (productDataService.findById(Long.parseLong(entry.getKey()))
                     .map(Product::getCarbohydrates).orElse(0F))/100*Integer.parseInt(entry.getValue());
-            sumProt += (productService.findById(Long.parseLong(entry.getKey()))
+            sumProt += (productDataService.findById(Long.parseLong(entry.getKey()))
                     .map(Product::getProtein).orElse(0F))/100*Integer.parseInt(entry.getValue());
-            sumFat += (productService.findById(Long.parseLong(entry.getKey()))
+            sumFat += (productDataService.findById(Long.parseLong(entry.getKey()))
                     .map(Product::getFat).orElse(0F))/100*Integer.parseInt(entry.getValue());
         }
 
         return sumCal+" kcal" +"  "+sumCarbo+" wegli"+"  "+sumProt+"bialka "+sumFat+"tluszczu";
+    }
+
+    public String addProduct(Product product){
+
+       if( productDataService.findByName(product.getName()).isPresent())
+        {
+            productDataService.save(product);
+        } else return "Taki Produkt już istnieje";
+
+        return product.toString();
     }
 }

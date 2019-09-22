@@ -8,12 +8,12 @@ import pl.manciak.thymeleaf.repository.QuantityRepository;
 import java.util.Optional;
 
 @Service
-public class QuantityService  {
+public class QuantityDataService {
 
     QuantityRepository quantityRepo;
 
     @Autowired
-    public QuantityService(QuantityRepository gramRepo) { this.quantityRepo = gramRepo; }
+    public QuantityDataService(QuantityRepository gramRepo) { this.quantityRepo = gramRepo; }
 
     public Quantity save (Quantity gram){
         return quantityRepo.save(gram);

@@ -7,8 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.manciak.thymeleaf.entity.Product;
 import pl.manciak.thymeleaf.manager.ProductManager;
-import pl.manciak.thymeleaf.service.ProductService;
+import pl.manciak.thymeleaf.service.ProductDataService;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -16,46 +17,45 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductRestController {
 
-    private ProductService productService;
+    private ProductDataService productDataService;
     private ProductManager productManager;
 
     @Autowired
-    public ProductRestController(ProductService productService, ProductManager productManager) {
-        this.productService = productService;
+    public ProductRestController(ProductDataService productDataService, ProductManager productManager) {
+        this.productDataService = productDataService;
         this.productManager = productManager;
     }
 
     @GetMapping
     public ResponseEntity<Iterable<Product>> showAllProducts(){
 
-        return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(productDataService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "id/{index}")
     public ResponseEntity<Optional<Product>> getProductById(@PathVariable Long index){
 
-        return new ResponseEntity<>(productService.findById(index), HttpStatus.OK);
+        return new ResponseEntity<>(productDataService.findById(index), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{name}")
     public ResponseEntity<Optional<Product>> getProductByName(@PathVariable String name){
 
-        return new ResponseEntity<>(productService.findByName(name), HttpStatus.OK);
+        return new ResponseEntity<>(productDataService.findByName(name), HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<Product> addProduct(@RequestBody Product product){
+    public ResponseEntity<String> addProduct(@Valid @RequestBody Product product){
 
-        return new ResponseEntity<>( productService.save(product), HttpStatus.OK);
+        return new ResponseEntity<>( productManager.addProduct(product), HttpStatus.OK);
     }
-
 
     @Transactional
     @DeleteMapping(path ="/{name}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteByName(@PathVariable String name){
 
-           productService.deleteByName(name);
+           productDataService.deleteByName(name);
     }
 
     @PostMapping("/sum")

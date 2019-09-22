@@ -10,12 +10,12 @@ import pl.manciak.thymeleaf.repository.ProductRepository;
 import java.util.Optional;
 
 @Service
-public class ProductService {
+public class ProductDataService {
 
     private ProductRepository repo;
 
     @Autowired
-    ProductService(ProductRepository repo){
+    ProductDataService(ProductRepository repo){
         this.repo = repo;
     }
 

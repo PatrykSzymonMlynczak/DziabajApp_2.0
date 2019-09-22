@@ -9,12 +9,12 @@ import pl.manciak.thymeleaf.repository.MealRepository;
 import java.util.Optional;
 
 @Service
-public class MealService {
+public class MealDataService {
 
     private MealRepository mealRepo;
 
     @Autowired
-    MealService(MealRepository mealRepo){
+    MealDataService(MealRepository mealRepo){
         this.mealRepo = mealRepo;
     }
 
@@ -26,6 +26,10 @@ public class MealService {
 
     public void deleteById(Long id){
         mealRepo.deleteById(id);
+    }
+
+    public void deleteByName(String name){
+        mealRepo.deleteByName(name);
     }
 
     public Meal save (Meal meal){

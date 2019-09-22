@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import pl.manciak.thymeleaf.entity.Product;
-import pl.manciak.thymeleaf.service.ProductService;
+import pl.manciak.thymeleaf.service.ProductDataService;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -15,20 +18,29 @@ public class ProductController {
 
     List<Product> productList;
 
-    ProductService productService;
+    ProductDataService productDataService;
 
     @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductDataService productDataService) {
+        this.productDataService = productDataService;
     }
 
     @GetMapping("/prod")
     public String prod(Model model){
 
-        Iterable<Product> iterable = productService.findAll();
-        model.addAttribute("iterable", iterable);
+        Iterable<Product> prods = productDataService.findAll();
+        model.addAttribute("prods", prods);
+        model.addAttribute("newProd", new Product());
 
         return "prod";
+    }
+
+    @PostMapping("/add-prod")
+    public String addProd(@Valid @ModelAttribute Product product){
+
+        productDataService.save(product);
+
+        return "redirect:/prod";
     }
 
 }
