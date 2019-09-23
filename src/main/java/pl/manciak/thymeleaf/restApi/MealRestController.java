@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.manciak.thymeleaf.entity.Meal;
 
 import pl.manciak.thymeleaf.manager.MealManager;
+import pl.manciak.thymeleaf.payload.MealProperties;
 import pl.manciak.thymeleaf.payload.MealRestModel;
 
 
@@ -31,7 +32,7 @@ public class MealRestController {
     @Transactional
     @DeleteMapping("/{name}")
     public ResponseEntity<?> deleteMelalByName(@PathVariable String name){
-        mealManager.deleteMelalByName(name);
+        mealManager.deleteMealByName(name);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -41,15 +42,17 @@ public class MealRestController {
         return new ResponseEntity<>( mealManager.getAllMeals(), HttpStatus.OK);
     }
 
+/*
     @GetMapping("/id/{id}/propertiesBy")
     @ResponseBody
     public ResponseEntity<String> showMealPropertiesById(@PathVariable Long id) {
        return new ResponseEntity<>(mealManager.getMealPropertiesById(id), HttpStatus.OK);
     }
+*/
 
     @GetMapping("/{name}/properties")
     @ResponseBody
-    public ResponseEntity<String> showMealByName(@PathVariable String name) {
+    public ResponseEntity<MealProperties> showMealByName(@PathVariable String name) {
         return new ResponseEntity<>(mealManager.getMealPropertiesByName(name), HttpStatus.OK);
 
     }

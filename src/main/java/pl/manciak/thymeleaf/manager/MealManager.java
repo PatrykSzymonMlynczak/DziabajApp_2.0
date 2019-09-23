@@ -5,13 +5,16 @@ import org.springframework.stereotype.Service;
 import pl.manciak.thymeleaf.entity.Meal;
 import pl.manciak.thymeleaf.entity.Product;
 import pl.manciak.thymeleaf.entity.Quantity;
+import pl.manciak.thymeleaf.payload.MealProperties;
 import pl.manciak.thymeleaf.payload.MealRestModel;
+import pl.manciak.thymeleaf.repository.MealRepository;
 import pl.manciak.thymeleaf.service.MealDataService;
 import pl.manciak.thymeleaf.service.ProductDataService;
 import pl.manciak.thymeleaf.service.QuantityDataService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MealManager {
@@ -19,6 +22,8 @@ public class MealManager {
     private ProductDataService productDataService;
     private MealDataService mealDataService;
     private QuantityDataService quantityDataService;
+
+    private MealProperties mealProperties;
 
     @Autowired
     public MealManager(ProductDataService productDataService, MealDataService mealDataService, QuantityDataService quantityDataService) {
@@ -51,7 +56,7 @@ public class MealManager {
         return mealRestModel.getMap().entrySet().toString();
     }
 
-    public void deleteMelalByName(String name) {
+    public void deleteMealByName(String name) {
         mealDataService.deleteByName(name);
     }
 
@@ -60,23 +65,24 @@ public class MealManager {
         return allMeals;
     }
 
-    public String getMealPropertiesById(Long id){
+/*    public MealProperties getMealPropertiesById(Long id){
         Map<Product,Quantity> productsFromMeal = mealDataService.findById(id).get().getProductsWithQuantity();
-        return countMealProperties(productsFromMeal);
-    }
+        return countMealProperties(name, productsFromMeal);
+    }*/
 
-    public String getMealPropertiesByName(String name){
+    public MealProperties getMealPropertiesByName(String name){
 
         Map<Product,Quantity> productsFromMeal = mealDataService.findByName(name).get().getProductsWithQuantity();
-        return countMealProperties(productsFromMeal);
+        return countMealProperties(name, productsFromMeal);
 
     }
 
-    public String countMealProperties(Map<Product,Quantity> productsFromMeal){
+    public Optional<MealProperties> countMealProperties(String name, Map<Product,Quantity> productsFromMeal){
         Float sumCal = 0F;
         Float sumCarbo = 0F;
         Float sumProt = 0F;
         Float sumFat = 0F;
+        Float sumPrice = 0F;
 
         for(HashMap.Entry<Product,Quantity> entry: productsFromMeal.entrySet())
         {
@@ -84,8 +90,11 @@ public class MealManager {
             sumCarbo += entry.getKey().getCarbohydrates()*entry.getValue().getWeight()/100;
             sumProt += entry.getKey().getProtein()*entry.getValue().getWeight()/100;
             sumFat += entry.getKey().getFat()*entry.getValue().getWeight()/100;
+
+            sumPrice += entry.getKey().getPrice();
         }
-        return sumCal+" kcal" +"  "+sumCarbo+" wegli"+"  "+sumProt+"bialka "+sumFat+"tluszczu";
+        return mealProperties = new MealProperties(name, sumCal,sumCarbo,sumProt,sumFat,sumPrice);
+        //return sumCal+" kcal" +"  "+sumCarbo+" wegli"+"  "+sumProt+"bialka "+sumFat+"tluszczu";
     }
 
 

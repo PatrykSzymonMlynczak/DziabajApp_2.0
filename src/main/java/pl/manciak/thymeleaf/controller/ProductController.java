@@ -17,7 +17,6 @@ import java.util.List;
 public class ProductController {
 
     List<Product> productList;
-
     ProductDataService productDataService;
 
     @Autowired
@@ -28,8 +27,7 @@ public class ProductController {
     @GetMapping("/prod")
     public String prod(Model model){
 
-        Iterable<Product> prods = productDataService.findAll();
-        model.addAttribute("prods", prods);
+        model.addAttribute("prods", productDataService.findAll());
         model.addAttribute("newProd", new Product());
 
         return "prod";

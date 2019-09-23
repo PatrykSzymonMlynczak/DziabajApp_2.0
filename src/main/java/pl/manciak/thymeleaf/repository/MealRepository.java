@@ -12,5 +12,4 @@ import java.util.Optional;
 public interface MealRepository extends JpaRepository<Meal, Long> {
     Optional<Meal> findByName(String name);
     void deleteByName(String name);
-
 }
