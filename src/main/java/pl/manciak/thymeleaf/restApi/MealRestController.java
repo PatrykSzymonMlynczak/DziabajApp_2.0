@@ -52,7 +52,7 @@ public class MealRestController {
 
     @GetMapping("/{name}/properties")
     @ResponseBody
-    public ResponseEntity<MealProperties> showMealByName(@PathVariable String name) {
+    public ResponseEntity<String> showMealByName(@PathVariable String name) {
         return new ResponseEntity<>(mealManager.getMealPropertiesByName(name), HttpStatus.OK);
 
     }

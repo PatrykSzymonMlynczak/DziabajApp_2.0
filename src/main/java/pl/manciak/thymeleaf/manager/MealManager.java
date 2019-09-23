@@ -5,16 +5,15 @@ import org.springframework.stereotype.Service;
 import pl.manciak.thymeleaf.entity.Meal;
 import pl.manciak.thymeleaf.entity.Product;
 import pl.manciak.thymeleaf.entity.Quantity;
-import pl.manciak.thymeleaf.payload.MealProperties;
+
 import pl.manciak.thymeleaf.payload.MealRestModel;
-import pl.manciak.thymeleaf.repository.MealRepository;
+
 import pl.manciak.thymeleaf.service.MealDataService;
 import pl.manciak.thymeleaf.service.ProductDataService;
 import pl.manciak.thymeleaf.service.QuantityDataService;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class MealManager {
@@ -23,7 +22,6 @@ public class MealManager {
     private MealDataService mealDataService;
     private QuantityDataService quantityDataService;
 
-    private MealProperties mealProperties;
 
     @Autowired
     public MealManager(ProductDataService productDataService, MealDataService mealDataService, QuantityDataService quantityDataService) {
@@ -70,14 +68,14 @@ public class MealManager {
         return countMealProperties(name, productsFromMeal);
     }*/
 
-    public MealProperties getMealPropertiesByName(String name){
+    public String getMealPropertiesByName(String name){
 
         Map<Product,Quantity> productsFromMeal = mealDataService.findByName(name).get().getProductsWithQuantity();
         return countMealProperties(name, productsFromMeal);
 
     }
 
-    public Optional<MealProperties> countMealProperties(String name, Map<Product,Quantity> productsFromMeal){
+    public String countMealProperties(String name, Map<Product,Quantity> productsFromMeal){
         Float sumCal = 0F;
         Float sumCarbo = 0F;
         Float sumProt = 0F;
@@ -93,8 +91,8 @@ public class MealManager {
 
             sumPrice += entry.getKey().getPrice();
         }
-        return mealProperties = new MealProperties(name, sumCal,sumCarbo,sumProt,sumFat,sumPrice);
-        //return sumCal+" kcal" +"  "+sumCarbo+" wegli"+"  "+sumProt+"bialka "+sumFat+"tluszczu";
+        //return new MealProperties(name, sumCal,sumCarbo,sumProt,sumFat,sumPrice);
+        return sumCal+" kcal" +"  "+sumCarbo+" wegli"+"  "+sumProt+"bialka "+sumFat+"tluszczu";
     }
 
 
