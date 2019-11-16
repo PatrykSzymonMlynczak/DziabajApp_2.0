@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css" type="text/css" >
 
+    <style>
+    input.error { background-color: pink }
+</style>
+
 </head>
 <body>
 
@@ -29,10 +33,10 @@
             </li>
             <li class="nav-item-dark dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" data-target="#mealmenu" role="button" >Baza Posiłków</a>
-                    <div class="dropdown-menu bg-dark" id="mealmenu">
-                        <a class="dorpdown-item" href="@{/meal}">Przegląd Posiłków</a>
-                        <a class="dorpdown-item" href="#">Stwórz Posiłek</a>
-                    </div>
+                <div class="dropdown-menu bg-dark" id="mealmenu">
+                    <a class="dorpdown-item" th:href="@{/meal}">Przegląd Posiłków</a>
+                    <a class="dorpdown-item" th:href="@{/createMeal}">Stwórz Posiłek</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Logowanie</a>
@@ -44,20 +48,52 @@
     </div>
 </nav>
 
-<h1 style="text-align:center;font-size:66px;color:red">Pokaz wartości odżywcze</h1></br></br>
+<h1>Dodaj Produkt do posiłku</h1>
+<div>
+    <div style="float:left;" class="container col-6 text-center">
+        <form  th:action="@{/createMealSend}" th:object="${nameQuantityModel}" method="post">
+            <table border="1">
+                <tr>
+                    <td><p>Wprowadź nazwe posiłku</p>
+                        <input  type="text"
+                                th:value="${mealName}" id="mealName" name="mealName"
+                    />
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Wprowadź nazwe produktu</p>
+                        <input  type="text"
+                                th:value="${productName}" id="productName" name="productName"
+                                 />
+                    </td>
+                    <td><p>Wprowadź gramature</p>
+                        <input  type="text"
+                                th:value="${productQuantity}" id="productQuantity" name="productQuantity"
+                    />
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Submit" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
-<div style="float:left;" class="container  col-6 text-center">
-</div>
-<form  th:action="@{/mealProperties-show}" th:object="${datePlanted}" method="post">
-    <table border="1">
-        <tr>
-            <td><input  type="text"
-                        th:value="${productName}" id="productName" name="productName" /></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit" /></td>
-        </tr>
+    <table border="4" cellpadding="2" cellspacing="2" width="70%">
+        <td  th:text="${mealName}">Nazma posiłku </td>
+        <table border="4" cellpadding="2" cellspacing="2" width="70%">
+            <tr th:each="instance : ${newMealMap}">
+                <td th:text="${instance.key}"></td>
+                <td th:text="${instance.value}"> Gram </td>
+            </tr>
+        </table>
+        <form  th:action="@{/createMealSendCommit}" th:object="${nameQuantityModel}" method="post">
+            <input type="submit" value="Commit" />
+        </form>
+
     </table>
+
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

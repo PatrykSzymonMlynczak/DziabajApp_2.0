@@ -1,8 +1,7 @@
-package pl.manciak.thymeleaf.controller;
+package pl.manciak.thymeleaf.controllerMvc;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -11,8 +10,7 @@ public class MainController {
     private String appMode;
 
     @RequestMapping("/start")
-    public String test(Model model){
-
+    public String test(){
         return "start";
     }
 

@@ -1,7 +1,6 @@
 package pl.manciak.thymeleaf.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Map;
 
 
@@ -15,7 +14,7 @@ public  class Meal {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<Product, Quantity> productsWithQuantity;
 
     public Meal(){}

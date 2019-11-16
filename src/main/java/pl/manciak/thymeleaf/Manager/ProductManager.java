@@ -1,11 +1,13 @@
-package pl.manciak.thymeleaf.manager;
+package pl.manciak.thymeleaf.Manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.manciak.thymeleaf.entity.Product;
 import pl.manciak.thymeleaf.service.ProductDataService;
+import pl.manciak.thymeleaf.validate.CheckEnteredValue;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 public class ProductManager {
@@ -13,16 +15,16 @@ public class ProductManager {
     private ProductDataService productDataService;
 
     @Autowired
-    public ProductManager(ProductDataService productDataService) {
+    ProductManager(ProductDataService productDataService) {
         this.productDataService = productDataService;
     }
 
     public String summarizeProductPropertiesById(HashMap<String,String> productsIdsMap){
 
-        Float sumCal = 0F;
-        Float sumCarbo = 0F;
-        Float sumProt = 0F;
-        Float sumFat = 0F;
+        float sumCal = 0F;
+        float sumCarbo = 0F;
+        float sumProt = 0F;
+        float sumFat = 0F;
 
         for (HashMap.Entry<String,String> entry : productsIdsMap.entrySet()) {
 
@@ -39,13 +41,28 @@ public class ProductManager {
         return sumCal+" kcal" +"  "+sumCarbo+" wegli"+"  "+sumProt+"bialka "+sumFat+"tluszczu";
     }
 
-    public String addProduct(Product product){
+    public Product addProduct(Product product){
 
-       if( productDataService.findByName(product.getName()).isPresent())
+        if(productDataService.findByName(product.getName()).isEmpty())
         {
-            productDataService.save(product);
-        } else return "Taki Produkt już istnieje";
+            return productDataService.save(product);
+        }
+        return product;
+    }
 
-        return product.toString();
+    public Iterable<Product> getAllProducts() {
+             return productDataService.findAll();
+    }
+
+    public Optional<Product> findProductById(Long index) {
+        return productDataService.findById(index);
+    }
+
+    public Optional<Product> findProductByName(String name) {
+        return productDataService.findByName(name);
+    }
+
+    public void deleteProductByName(String name) {
+        productDataService.deleteByName(name);
     }
 }

@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.manciak.thymeleaf.entity.Product;
-import pl.manciak.thymeleaf.manager.ProductManager;
-import pl.manciak.thymeleaf.service.ProductDataService;
+import pl.manciak.thymeleaf.Manager.ProductManager;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -17,36 +16,34 @@ import java.util.Optional;
 @RequestMapping("/products")
 public class ProductRestController {
 
-    private ProductDataService productDataService;
     private ProductManager productManager;
 
     @Autowired
-    public ProductRestController(ProductDataService productDataService, ProductManager productManager) {
-        this.productDataService = productDataService;
+    public ProductRestController(ProductManager productManager) {
         this.productManager = productManager;
     }
 
     @GetMapping
     public ResponseEntity<Iterable<Product>> showAllProducts(){
 
-        return new ResponseEntity<>(productDataService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(productManager.getAllProducts(), HttpStatus.OK);
     }
+
 
     @GetMapping(path = "id/{index}")
     public ResponseEntity<Optional<Product>> getProductById(@PathVariable Long index){
 
-        return new ResponseEntity<>(productDataService.findById(index), HttpStatus.OK);
+        return new ResponseEntity<>(productManager.findProductById(index), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{name}")
     public ResponseEntity<Optional<Product>> getProductByName(@PathVariable String name){
 
-        return new ResponseEntity<>(productDataService.findByName(name), HttpStatus.OK);
+        return new ResponseEntity<>(productManager.findProductByName(name), HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<String> addProduct(@Valid @RequestBody Product product){
-
+    public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product){
         return new ResponseEntity<>( productManager.addProduct(product), HttpStatus.OK);
     }
 
@@ -55,7 +52,7 @@ public class ProductRestController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteByName(@PathVariable String name){
 
-           productDataService.deleteByName(name);
+        productManager.deleteProductByName(name);
     }
 
     @PostMapping("/sum")

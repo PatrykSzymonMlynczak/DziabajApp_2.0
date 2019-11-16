@@ -1,7 +1,7 @@
 package pl.manciak.thymeleaf.entity;
 
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 

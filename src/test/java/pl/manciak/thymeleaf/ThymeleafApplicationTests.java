@@ -2,6 +2,7 @@ package pl.manciak.thymeleaf;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -11,6 +12,7 @@ public class ThymeleafApplicationTests {
 
     @Test
     public void contextLoads() {
+
     }
 
 }

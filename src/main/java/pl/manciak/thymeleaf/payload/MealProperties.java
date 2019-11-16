@@ -3,13 +3,16 @@ package pl.manciak.thymeleaf.payload;
 public class MealProperties {
 
     private String name;
-    private Float calories;
-    private Float carbohydrates;
-    private Float protein;
-    private Float fat;
-    private Float price;
+    private float calories;
+    private float carbohydrates;
+    private float protein;
+    private float fat;
+    private float price;
 
-    public MealProperties(String name, Float calories, Float carbohydrates, Float protein, Float fat, Float price) {
+    public MealProperties() {
+    }
+
+    public MealProperties(String name, float calories, float carbohydrates, float protein, float fat, float price) {
         this.name = name;
         this.calories = calories;
         this.carbohydrates = carbohydrates;
@@ -42,27 +45,39 @@ public class MealProperties {
         this.carbohydrates = carbohydrates;
     }
 
-    public Float getProtein() {
+    public float getProtein() {
         return protein;
     }
 
-    public void setProtein(Float protein) {
+    public void setProtein(float protein) {
         this.protein = protein;
     }
 
-    public Float getFat() {
+    public float getFat() {
         return fat;
     }
 
-    public void setFat(Float fat) {
+    public void setFat(float fat) {
         this.fat = fat;
     }
 
-    public Float getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "MealProperties{" +
+                "name='" + name + '\'' +
+                ", calories=" + calories +
+                ", carbohydrates=" + carbohydrates +
+                ", protein=" + protein +
+                ", fat=" + fat +
+                ", price=" + price +
+                '}';
     }
 }

@@ -30,9 +30,9 @@
             <li class="nav-item-dark dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" data-target="#mealmenu" role="button" >Baza Posiłków</a>
                     <div class="dropdown-menu bg-dark" id="mealmenu">
-                        <a class="dorpdown-item" href="@{/meal}">Przegląd Posiłków</a>
-                        <a class="dorpdown-item" href="#">Stwórz Posiłek</a>
-                    </div>
+                        <a class="dorpdown-item" th:href="@{/meal}">Przegląd Posiłków</a>
+                        <a class="dorpdown-item" th:href="@{/createMeal}">Stwórz Posiłek</a>
+    </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Logowanie</a>
@@ -46,11 +46,11 @@
 
 <h1 style="text-align:center;font-size:66px;color:red">Baza Posiłków</h1></br></br>
 
-<div class="container  col-12 text-center" style="justify-content:center;align:center;text-align:center;">
+<div class="container  col-6 text-center" style="float:left;">
         <tr th:each="singleMeal : ${mealList}">
-            <table border="4" cellpadding="2" cellspacing="2" width="50%">
+            <table border="4" cellpadding="2" cellspacing="2" width="100%">
                 <td th:text="${singleMeal.getName()}">keyvalue</td>
-                    <table border="4" cellpadding="2" cellspacing="2" width="50%">
+                    <table border="4" cellpadding="2" cellspacing="2" width="100%">
                         <tr th:each="instance : ${singleMeal.getProductsWithQuantity()}">
                                 <td th:text="${instance.key.name}"></td>
                                 <td th:text="${instance.value.weight}"> Gram </td>
@@ -60,14 +60,33 @@
         </tr>
 </div>
 
-<div style="float:left;" class="container  col-6 text-center">
-    <form th:action="@{/meal}" th:text="${name}" method="post">
-        <h3 style="text-align:center;">Sprawdź posiłek wpisując nazwę</h3>
+<div style="float:left; text-align:center;" class="container col-6 text-center">
 
-        <p >Name: <input type="text" th:field="*{name}"></p>
-
-        <p>  <input type="submit"></p>
-    </form>
+    <h2 style="text-align:center;font-size:66px;color:red">Pokaz wartości odżywcze</h2></br></br>
+        <div style="float:left;">
+            <form  th:action="@{/mealProperties-show}" th:object="${nameQuantityModel}" method="post">
+                <table border="1">
+                    <tr>
+                        <td><input  type="text"
+                                    th:value="${mealName}" id="mealName" name="mealName" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Submit" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div style="float:left;" class="container col-6 text-center">
+            <tr th:each="mealModel: ${properties}">
+                <td th:text="${mealModel.getName()}"> </td> </br>
+                <td th:text="${mealModel.getCalories()}">  </td> Calories,
+                <td th:text="${mealModel.getFat()}">  </td> Fat,
+                <td th:text="${mealModel.getProtein()}">  </td> Protein,
+                <td th:text="${mealModel.getCarbohydrates()}">  </td> Carbohydrates,
+                <td th:text="${mealModel.getPrice()}">  </td> Price,
+                <p>==============================</p>
+            </tr>
+        </div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -7,10 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.manciak.thymeleaf.entity.Meal;
 
-import pl.manciak.thymeleaf.manager.MealManager;
-import pl.manciak.thymeleaf.payload.MealProperties;
-import pl.manciak.thymeleaf.payload.MealRestModel;
-
+import pl.manciak.thymeleaf.Manager.MealManager;
+import pl.manciak.thymeleaf.payload.MealModel;
 
 @RestController
 @RequestMapping("/meals")
@@ -24,16 +22,16 @@ public class MealRestController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createMeal(@RequestBody MealRestModel mealRestModel){
+    public ResponseEntity<String> createMeal(@RequestBody MealModel mealModel){
 
-        return new ResponseEntity<>(mealManager.createMeal(mealRestModel), HttpStatus.OK);
+        return new ResponseEntity<>(mealManager.createMeal(mealModel), HttpStatus.OK);
     }
 
     @Transactional
-    @DeleteMapping("/{name}")
-    public ResponseEntity<?> deleteMelalByName(@PathVariable String name){
+    @DeleteMapping(path ="/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteMelalByName(@PathVariable String name){
         mealManager.deleteMealByName(name);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
@@ -42,18 +40,11 @@ public class MealRestController {
         return new ResponseEntity<>( mealManager.getAllMeals(), HttpStatus.OK);
     }
 
-/*
-    @GetMapping("/id/{id}/propertiesBy")
-    @ResponseBody
-    public ResponseEntity<String> showMealPropertiesById(@PathVariable Long id) {
-       return new ResponseEntity<>(mealManager.getMealPropertiesById(id), HttpStatus.OK);
-    }
-*/
 
     @GetMapping("/{name}/properties")
     @ResponseBody
     public ResponseEntity<String> showMealByName(@PathVariable String name) {
-        return new ResponseEntity<>(mealManager.getMealPropertiesByName(name), HttpStatus.OK);
+        return new ResponseEntity<>(mealManager.getMealPropertiesByNameString(name), HttpStatus.OK);
 
     }
 
