@@ -8,4 +8,5 @@ Project allows adding products, creating meals, and count macros at every meal.
 #TODO:
 1. User service 
 2. Creating dialy diets 
-3. Upload to Heroku
+3. Verify added products
+4. Upload to Heroku
