@@ -14,7 +14,6 @@
 </head>
 <body>
 
-
 <nav class="navbar navbar-dark bg-dark navbar-expand-md">
     <a class="navbar-brand" th:href="@{/start}" >
         <i class='fas fa-drumstick-bite d-inline-block mr-2 ml-2 align-bottom ' style='font-size:30px;color:red'></i>
@@ -30,58 +29,65 @@
             </li>
             <li class="nav-item-dark dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" data-target="#mealmenu" role="button" >Baza Posiłków</a>
-                <div class="dropdown-menu bg-dark" id="mealmenu">
-                    <a class="dorpdown-item" th:href="@{/meal}">Przegląd Posiłków</a>
-                    <a class="dorpdown-item" th:href="@{/createMeal}">Stwórz Posiłek</a>
-                </div>
+                    <div class="dropdown-menu bg-dark" id="mealmenu">
+                        <a class="dorpdown-item" th:href="@{/mealsThy}">Przegląd Posiłków</a>
+                        <a class="dorpdown-item" th:href="@{/createMeal}">Stwórz Posiłek</a>
+    </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Logowanie</a>
             </li>
             <li class="nav-item disabled">
-                <a class="nav-link" th:href="@{/prod}">Produkty</a>
+                <a class="nav-link" th:href="@{/productsThy}">Produkty</a>
             </li>
         </ul>
     </div>
 </nav>
 
+<h1 style="text-align:center;font-size:66px;color:red">Baza Posiłków</h1></br></br>
 
-<h1 style="text-align:center;font-size:66px; color:red">Baza Produktów</h1></br></br>
-
-    <div style="float:left;" class="container  col-6 text-center">
-        <form th:action="@{/add-prod}" th:object="${newProd}" method="post">
-             <h3 style="text-align:right;margin-right:88px;"> UZUPEŁNIJ POLA</h3>
-             <h3 style="text-align:right;margin-right:60px;">ABY DODAĆ PRODUKT</h3>
-            <p style="text-align:right;margin-right:85px;margin-bottom:8px;">Name:
-                <input type="text" th:field="*{name}"></p>
-            <p style="text-align:right;margin-right:85px;margin-bottom:8px;">Calories:
-                <input type="text" th:field="*{calories}"></p>
-            <p style="text-align:right;margin-right:85px;margin-bottom:8px;">Fat:
-                <input type="text" th:field="*{fat}"></p>
-            <p style="text-align:right;margin-right:85px;margin-bottom:8px;">Protein:
-                <input type="text" th:field="*{protein}"></p>
-            <p style="text-align:right;margin-right:85px;margin-bottom:8px;">Carbohydrates:
-                <input type="text" th:field="*{carbohydrates}"></p>
-            <p style="text-align:right;margin-right:85px;margin-bottom:8px;">Price:
-                <input type="text" th:field="*{price}"></p>
-            <p style="text-align:right;margin-right:85px;margin-bottom:8px;">
-                <input type="submit"></p>
-        </form>
-    </div>
-
-    <div style="float:left;" class="container col-6 text-center">
-        <tr th:each="products: ${prods}">
-            <td th:text="${products.getName()}"> </td> </br>
-            <td th:text="${products.getCalories()}">  </td> Calories,
-            <td th:text="${products.getFat()}">  </td> Fat,
-            <td th:text="${products.getProtein()}">  </td> Protein,
-            <td th:text="${products.getCarbohydrates()}">  </td> Carbohydrates,
-            <td th:text="${products.getPrice()}">  </td> Price,
-            <p>==============================</p>
+<div class="container  col-6 text-center" style="float:left;">
+        <tr th:each="singleMeal : ${mealList}">
+            <table border="4" cellpadding="2" cellspacing="2" width="100%">
+                <td th:text="${singleMeal.getName()}">keyvalue</td>
+                    <table border="4" cellpadding="2" cellspacing="2" width="100%">
+                        <tr th:each="instance : ${singleMeal.getProductsWithQuantity()}">
+                                <td th:text="${instance.key.name}"></td>
+                                <td th:text="${instance.value.weight}"> Gram </td>
+                        </tr>
+                    </table>
+            </table>
         </tr>
-    </div>
+</div>
 
+<div style="float:left; text-align:center;" class="container col-6 text-center">
 
+    <h2 style="text-align:center;font-size:66px;color:red">Pokaz wartości odżywcze</h2></br></br>
+        <div style="float:left;">
+            <form  th:action="@{/mealProperties-show}" th:object="${nameQuantityModel}" method="post">
+                <table border="1">
+                    <tr>
+                        <td><input  type="text"
+                                    th:value="${mealName}" id="mealName" name="mealName" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Submit" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div style="float:left;" class="container col-6 text-center">
+            <tr th:each="mealModel: ${properties}">
+                <td th:text="${mealModel.getName()}"> </td> </br>
+                <td th:text="${mealModel.getCalories()}">  </td> Calories,
+                <td th:text="${mealModel.getFat()}">  </td> Fat,
+                <td th:text="${mealModel.getProtein()}">  </td> Protein,
+                <td th:text="${mealModel.getCarbohydrates()}">  </td> Carbohydrates,
+                <td th:text="${mealModel.getPrice()}">  </td> Price,
+                <p>==============================</p>
+            </tr>
+        </div>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

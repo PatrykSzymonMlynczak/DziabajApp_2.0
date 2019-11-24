@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.manciak.thymeleaf.entity.Product;
 import pl.manciak.thymeleaf.service.ProductDataService;
-import pl.manciak.thymeleaf.validate.CheckEnteredValue;
 
 import java.util.HashMap;
 import java.util.Optional;

@@ -29,14 +29,13 @@ public class ProductRestController {
         return new ResponseEntity<>(productManager.getAllProducts(), HttpStatus.OK);
     }
 
-
     @GetMapping(path = "id/{index}")
     public ResponseEntity<Optional<Product>> getProductById(@PathVariable Long index){
 
         return new ResponseEntity<>(productManager.findProductById(index), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{name}")
+    @GetMapping(path = "/{name}")//B/Y////N/A/M/E
     public ResponseEntity<Optional<Product>> getProductByName(@PathVariable String name){
 
         return new ResponseEntity<>(productManager.findProductByName(name), HttpStatus.OK);
@@ -44,6 +43,7 @@ public class ProductRestController {
 
     @PostMapping()
     public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product){
+
         return new ResponseEntity<>( productManager.addProduct(product), HttpStatus.OK);
     }
 

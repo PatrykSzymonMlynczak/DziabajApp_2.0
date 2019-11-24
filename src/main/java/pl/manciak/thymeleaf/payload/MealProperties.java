@@ -9,8 +9,7 @@ public class MealProperties {
     private float fat;
     private float price;
 
-    public MealProperties() {
-    }
+    public MealProperties() { }
 
     public MealProperties(String name, float calories, float carbohydrates, float protein, float fat, float price) {
         this.name = name;

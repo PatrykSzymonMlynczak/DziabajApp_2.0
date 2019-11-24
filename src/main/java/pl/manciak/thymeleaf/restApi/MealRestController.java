@@ -40,8 +40,7 @@ public class MealRestController {
         return new ResponseEntity<>( mealManager.getAllMeals(), HttpStatus.OK);
     }
 
-
-    @GetMapping("/{name}/properties")
+    @GetMapping("/{name}")
     @ResponseBody
     public ResponseEntity<String> showMealByName(@PathVariable String name) {
         return new ResponseEntity<>(mealManager.getMealPropertiesByNameString(name), HttpStatus.OK);

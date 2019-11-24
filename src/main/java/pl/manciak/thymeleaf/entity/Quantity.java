@@ -9,6 +9,7 @@ public class Quantity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+
     Float weight;
 
     public Quantity(){}

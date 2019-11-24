@@ -5,7 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import pl.manciak.thymeleaf.exceptions.InvalidDataFormat;
+import pl.manciak.thymeleaf.exceptions.InvalidDataFormatException;
 import pl.manciak.thymeleaf.exceptions.ResourceNotFoundException;
 
 
@@ -24,7 +24,7 @@ public class ShouldThrowExceptionsTests {
 
     @Test()
     public void shouldThrowInvalidDataFormatException_Test() {
-        exception.expect(InvalidDataFormat.class);
+        exception.expect(InvalidDataFormatException.class);
         checker.checkIfNumeric("aaa");
     }
 

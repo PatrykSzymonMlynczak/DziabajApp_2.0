@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.manciak.thymeleaf.Manager.MealManager;
 import pl.manciak.thymeleaf.Manager.ProductManager;
 import pl.manciak.thymeleaf.entity.Meal;
-import pl.manciak.thymeleaf.entity.Product;
-import pl.manciak.thymeleaf.entity.Quantity;
 import pl.manciak.thymeleaf.payload.MealModel;
 import pl.manciak.thymeleaf.payload.NameQuantityModel;
 import pl.manciak.thymeleaf.payload.MealProperties;
@@ -22,12 +20,10 @@ import java.util.*;
 @Controller
 public class MealController {
 
-
     private MealProperties mealProperties = new MealProperties();
     private HashMap<String, String> newMeal = new HashMap<>();
-    private String mealName;
     private MealModel mealModel = new MealModel();
-
+    private String mealName;
 
     private MealManager mealManager;
     private ProductManager productManager;
@@ -39,22 +35,22 @@ public class MealController {
         this.productManager = productManager;
     }
 
-    @GetMapping("/meal")
+    @GetMapping("/mealsThy")
     public String meal(Model model) {
 
         Iterable<Meal> mealList = mealManager.getAllMeals();
         model.addAttribute("mealList", mealList);
         model.addAttribute("properties", mealProperties);
 
-        return "meal";
+        return "mealsThy";
     }
 
-    @PostMapping("/mealProperties-show")
+    @PostMapping("/mealPropertiesThy")
     public String mealPropertiesShow(@ModelAttribute NameQuantityModel nameQuantityModel) {
 
         mealProperties = mealManager.getMealPropertiesByName(nameQuantityModel.getMealName());
 
-        return "redirect:/meal";
+        return "redirect:/mealsThy";
     }
 
     @GetMapping("/createMeal")
@@ -62,16 +58,16 @@ public class MealController {
 
         model.addAttribute("newMealMap", newMeal);
         model.addAttribute("mealName", mealName);
+
         return "createMeal";
     }
 
-    @PostMapping("/createMealSend")
-    public String createMealSend(@ModelAttribute NameQuantityModel nameQuantityModel, BindingResult errors) {
+    @PostMapping("/createMealSendRequest")
+    public String createMealSendRequest(@ModelAttribute NameQuantityModel nameQuantityModel) {
 
         mealName = nameQuantityModel.getMealName();
 
         if (productManager.findProductByName(nameQuantityModel.getProductName()).isEmpty()) {
-            errors.addError(new ObjectError("Product not Exist", "Product not Exist"));
             return "redirect:/createMeal";
         } else {
 

@@ -10,7 +10,6 @@ import pl.manciak.thymeleaf.Manager.ProductManager;
 import pl.manciak.thymeleaf.entity.Product;
 import pl.manciak.thymeleaf.validate.CheckEnteredValue;
 
-
 @Controller
 public class ProductController {
 
@@ -21,31 +20,20 @@ public class ProductController {
         this.productManager = productManager;
     }
 
-
-
-    @GetMapping("/prod")
+    @GetMapping("/productsThy")
     public String prod(Model model){
 
         model.addAttribute("prods", productManager.getAllProducts());
         model.addAttribute("newProd", new Product());
 
-        return "prod";
+        return "productsThy";
     }
 
-    @PostMapping("/add-prod")
+    @PostMapping("/newProductThy")
     public String addProd(@ModelAttribute Product product){
 
-        System.out.println(product);
+           productManager.addProduct(product);
 
-        CheckEnteredValue.CheckEnteredValue(product.getCalories().toString());
-        CheckEnteredValue.CheckEnteredValue(product.getFat().toString());
-        CheckEnteredValue.CheckEnteredValue(product.getCarbohydrates().toString());
-        CheckEnteredValue.CheckEnteredValue(product.getProtein().toString());
-        CheckEnteredValue.CheckEnteredValue(product.getPrice().toString());
-
-        productManager.addProduct(product);
-
-        return "redirect:/prod";
+        return "redirect:/productsThy";
     }
-
 }

@@ -6,6 +6,7 @@ import pl.manciak.thymeleaf.entity.Meal;
 import pl.manciak.thymeleaf.entity.Product;
 import pl.manciak.thymeleaf.entity.Quantity;
 
+import pl.manciak.thymeleaf.exceptions.ItemAlreadyExistsException;
 import pl.manciak.thymeleaf.payload.MealModel;
 
 import pl.manciak.thymeleaf.payload.MealProperties;
@@ -42,9 +43,7 @@ public class MealManager {
             for (HashMap.Entry<String, String> entry : mealModel.getMealModel().entrySet()) {
                 Quantity weight = new Quantity();
 
-                CheckEnteredValue.CheckEnteredValue(entry.getValue());
-
-                weight.setWeight(Float.parseFloat(entry.getValue()));
+                 weight.setWeight(Float.parseFloat(entry.getValue()));
                 quantityDataService.save(weight);
 
                 productsWithGrams.put(
@@ -55,7 +54,7 @@ public class MealManager {
 
             Meal meal = new Meal(mealModel.getNameMeal(), productsWithGrams);
             mealDataService.save(meal);
-        }else return "Taki element juz istnieje";
+        }else throw new ItemAlreadyExistsException("Taki element juz istnieje");
 
         return mealModel.getMealModel().entrySet().toString();
     }

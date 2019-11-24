@@ -8,8 +8,7 @@ public class MealModel {
     private String nameMeal;
     private HashMap<String,String> mealModel;
 
-    public MealModel() {
-    }
+    public MealModel() { }
 
     public MealModel(String nameMeal, HashMap<String, String> mealModel) {
         this.nameMeal = nameMeal;

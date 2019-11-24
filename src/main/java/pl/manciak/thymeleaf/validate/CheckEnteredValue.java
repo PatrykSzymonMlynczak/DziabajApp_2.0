@@ -1,20 +1,17 @@
 package pl.manciak.thymeleaf.validate;
 
-import pl.manciak.thymeleaf.exceptions.InvalidDataFormat;
+import pl.manciak.thymeleaf.exceptions.InvalidDataFormatException;
 import pl.manciak.thymeleaf.exceptions.ResourceNotFoundException;
 
 import java.util.regex.Pattern;
-
 //
 // Klasa dla testów jednostkowych
 
 public class CheckEnteredValue {
 
 
-    public static void CheckEnteredValue(String checkedValue){
-        checkIfNull(checkedValue);
-        checkIfNumeric(checkedValue);
-    }
+
+
 
     public static boolean checkIfNull(String checkedValue){
         if(checkedValue == null){
@@ -23,11 +20,12 @@ public class CheckEnteredValue {
         else return true;
     }
 
+
     public static boolean checkIfNumeric(String checkedNumber){
 
         boolean check = Pattern.matches("([0-9\\,\\.])*", checkedNumber);
         if(!check){
-            throw new InvalidDataFormat(String.format("Entered Value must be numeric"));
+            throw new InvalidDataFormatException(String.format("Entered Value must be numeric"));
         }
         else return true;
     }
