@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.manciak.thymeleaf.Manager.ProductManager;
-import pl.manciak.thymeleaf.entity.Product;
-import pl.manciak.thymeleaf.validate.CheckEnteredValue;
+import pl.manciak.thymeleaf.entity.FoodEntities.Products;
 
 @Controller
 public class ProductController {
@@ -24,13 +23,13 @@ public class ProductController {
     public String prod(Model model){
 
         model.addAttribute("prods", productManager.getAllProducts());
-        model.addAttribute("newProd", new Product());
+        model.addAttribute("newProd", new Products());
 
         return "productsThy";
     }
 
     @PostMapping("/newProductThy")
-    public String addProd(@ModelAttribute Product product){
+    public String addProd(@ModelAttribute Products product){
 
            productManager.addProduct(product);
 

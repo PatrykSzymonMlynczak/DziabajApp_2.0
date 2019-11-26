@@ -1,4 +1,4 @@
-package pl.manciak.thymeleaf.entity;
+package pl.manciak.thymeleaf.entity.FoodEntities;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package pl.manciak.thymeleaf.entity;
+package pl.manciak.thymeleaf.entity.FoodEntities;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "meals")
-public  class Meal {
+public  class Meals {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
@@ -15,11 +15,12 @@ public  class Meal {
     private String name;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    private Map<Product, Quantity> productsWithQuantity;
+    private Map<Products, Quantity> productsWithQuantity;
 
-    public Meal(){}
 
-    public Meal(String name, Map<Product, Quantity> productsWithQuantity) {
+    public Meals(){}
+
+    public Meals(String name, Map<Products, Quantity> productsWithQuantity) {
         this.name = name;
         this.productsWithQuantity = productsWithQuantity;
     }
@@ -32,17 +33,17 @@ public  class Meal {
         this.name = name;
     }
 
-    public Map<Product, Quantity> getProductsWithQuantity() {
+    public Map<Products, Quantity> getProductsWithQuantity() {
         return productsWithQuantity;
     }
 
-    public void setProductsWithQuantity(Map<Product, Quantity> productsWithQuantity) {
+    public void setProductsWithQuantity(Map<Products, Quantity> productsWithQuantity) {
         this.productsWithQuantity = productsWithQuantity;
     }
 
     @Override
     public String toString() {
-        return "Meal{" +
+        return "Meals{" +
                 "meal_ID=" + idMeal +
                 ", name='" + name + '\'' +
                 ", productsWithQuantity=" + productsWithQuantity +

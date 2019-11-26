@@ -1,9 +1,9 @@
-package pl.manciak.thymeleaf.service;
+package pl.manciak.thymeleaf.service.FoodService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.manciak.thymeleaf.entity.Quantity;
-import pl.manciak.thymeleaf.repository.QuantityRepository;
+import pl.manciak.thymeleaf.entity.FoodEntities.Quantity;
+import pl.manciak.thymeleaf.repository.FoodRepo.QuantityRepository;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package pl.manciak.thymeleaf.entity;
+package pl.manciak.thymeleaf.entity.FoodEntities;
 
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Products {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,15 +15,21 @@ public class Product {
 
     @NotEmpty(message = "Please provide a name")
     private String name;
+
     private Float calories;
+
     private Float carbohydrates;
+
     private Float protein;
+
     private Float fat;
+
     private Float price;
 
-    public Product(){}
 
-    public Product(String name, Float calories, Float carbohydrates, Float protein, Float fat, Float price ) {
+    public Products(){}
+
+    public Products(String name, Float calories, Float carbohydrates, Float protein, Float fat, Float price ) {
         this.name = name;
         this.calories = calories;
         this.carbohydrates = carbohydrates;
@@ -90,7 +96,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Products{" +
                 "product_ID=" + id +
                 ", name='" + name + '\'' +
                 ", calories=" + calories +
