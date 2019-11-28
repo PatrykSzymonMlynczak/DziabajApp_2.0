@@ -17,8 +17,8 @@ public class MongoDBConfig {
 /*  @Bean
     CommandLineRunner commandLineRunner (UserRepository userRepository){
         return strings ->{
-                userRepository.save(new Users(1,"sd", "swe","wffwf@gf.sd", "23r2f2", Collections.singleton(RoleName.ROLE_USER)));
-                userRepository.save(new Users(2,"sd", "swe","wffwf@gf.sd", "23r2f2", Collections.singleton(RoleName.ROLE_USER)));
+                userRepository.save(new Users(1,"sd", "swe","wffwf@gf.sd", "23r2f2", Collections.singleton(RoleName.USER)));
+                userRepository.save(new Users(2,"sd", "swe","wffwf@gf.sd", "23r2f2", Collections.singleton(RoleName.USER)));
             };
 
     }*/

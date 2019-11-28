@@ -6,12 +6,13 @@ import org.springframework.stereotype.Service;
 import pl.manciak.thymeleaf.entity.UserEntities.RoleName;
 import pl.manciak.thymeleaf.entity.UserEntities.Users;
 import pl.manciak.thymeleaf.exceptions.ResourceAlreadyExistsException;
+import pl.manciak.thymeleaf.exceptions.ResourceNotFoundException;
 import pl.manciak.thymeleaf.repository.UserRepo.UserRepository;
 
 import java.util.Collections;
+import java.util.List;
 
-import static pl.manciak.thymeleaf.entity.UserEntities.RoleName.ROLE_ADMIN;
-import static pl.manciak.thymeleaf.entity.UserEntities.RoleName.ROLE_MOD;
+import static pl.manciak.thymeleaf.entity.UserEntities.RoleName.*;
 
 @Service
 public class UserDataService {
@@ -35,16 +36,42 @@ public class UserDataService {
     }
 
     private RoleName setUserRole(RoleName role){
-        if (role.equals(ROLE_ADMIN))
+        if (role.equals(ADMIN))
         {
-            return ROLE_ADMIN;
+            return ADMIN;
         }
-        else if(role.equals(ROLE_MOD))
+        else if(role.equals(MOD))
         {
-            return RoleName.ROLE_MOD;
+            return MOD;
         }else
         {
-            return RoleName.ROLE_USER;
+            return USER;
         }
     }
+
+    public Users findByEmail(String email) {
+        Users user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("User with email %s does not exists", email)));
+        return user;
+    }
+
+
+    public Users findById(Integer userID) {
+        Users user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("User with id %s does not exists", userID)));
+        return user;
+    }
+
+
+    public void deleteUser(String email) {
+        Users user = findByEmail(email);
+        userRepository.deleteById(user.getId());
+    }
+
+
+    public List<Users> findAll() {
+        List<Users> users= userRepository.findAll();
+        return users;
+    }
+
 }

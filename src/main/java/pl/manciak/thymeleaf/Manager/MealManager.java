@@ -2,8 +2,8 @@ package pl.manciak.thymeleaf.Manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.manciak.thymeleaf.entity.FoodEntities.Meals;
-import pl.manciak.thymeleaf.entity.FoodEntities.Products;
+import pl.manciak.thymeleaf.entity.FoodEntities.Meal;
+import pl.manciak.thymeleaf.entity.FoodEntities.Product;
 import pl.manciak.thymeleaf.entity.FoodEntities.Quantity;
 
 import pl.manciak.thymeleaf.exceptions.ItemAlreadyExistsException;
@@ -37,7 +37,7 @@ public class MealManager {
 
         if(mealDataService.findByName(mealModel.getNameMeal()).isPresent() == false) {
 
-            Map<Products, Quantity> productsWithGrams = new HashMap<>();
+            Map<Product, Quantity> productsWithGrams = new HashMap<>();
 
             for (HashMap.Entry<String, String> entry : mealModel.getMealModel().entrySet()) {
                 Quantity weight = new Quantity();
@@ -51,7 +51,7 @@ public class MealManager {
                 );
             }
 
-            Meals meal = new Meals(mealModel.getNameMeal(), productsWithGrams);
+            Meal meal = new Meal(mealModel.getNameMeal(), productsWithGrams);
             mealDataService.save(meal);
         }else throw new ItemAlreadyExistsException("Taki element juz istnieje");
 
@@ -62,35 +62,35 @@ public class MealManager {
         mealDataService.deleteByName(name);
     }
 
-    public Iterable<Meals> getAllMeals(){
+    public Iterable<Meal> getAllMeals(){
         return mealDataService.findAll();
     }
 
-    public Optional<Meals> getMealByName(String name){
+    public Optional<Meal> getMealByName(String name){
         return mealDataService.findByName(name);
     }
 
     public MealProperties getMealPropertiesByName(String name){
 
-        Map<Products,Quantity> productsFromMeal = mealDataService.findByName(name).get().getProductsWithQuantity();
+        Map<Product,Quantity> productsFromMeal = mealDataService.findByName(name).get().getProductsWithQuantity();
         return countMealPropertiesFromMealMap(name, productsFromMeal);
     }
 
     public String getMealPropertiesByNameString(String name){
 
-        Map<Products,Quantity> productsFromMeal = mealDataService.findByName(name).get().getProductsWithQuantity();
+        Map<Product,Quantity> productsFromMeal = mealDataService.findByName(name).get().getProductsWithQuantity();
         return countMealPropertiesFromMealMap(name, productsFromMeal).toString();
 
     }
 
-    public MealProperties countMealPropertiesFromMealMap(String name, Map<Products,Quantity> productsFromMeal){
+    public MealProperties countMealPropertiesFromMealMap(String name, Map<Product,Quantity> productsFromMeal){
         float sumCal = 0F;
         float sumCarbo = 0F;
         float sumProt = 0F;
         float sumFat = 0F;
         float sumPrice = 0F;
 
-        for(HashMap.Entry<Products,Quantity> entry: productsFromMeal.entrySet())
+        for(HashMap.Entry<Product,Quantity> entry: productsFromMeal.entrySet())
         {
             sumCal += entry.getKey().getCalories()*entry.getValue().getWeight()/100;
             sumCarbo += entry.getKey().getCarbohydrates()*entry.getValue().getWeight()/100;

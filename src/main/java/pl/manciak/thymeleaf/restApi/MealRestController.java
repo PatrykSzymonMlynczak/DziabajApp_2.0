@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import pl.manciak.thymeleaf.entity.FoodEntities.Meals;
+import pl.manciak.thymeleaf.entity.FoodEntities.Meal;
 
 import pl.manciak.thymeleaf.Manager.MealManager;
 import pl.manciak.thymeleaf.payload.MealModel;
@@ -36,7 +36,7 @@ public class MealRestController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<Iterable<Meals>> showAllMeals(){
+    public ResponseEntity<Iterable<Meal>> showAllMeals(){
         return new ResponseEntity<>( mealManager.getAllMeals(), HttpStatus.OK);
     }
 

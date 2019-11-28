@@ -18,27 +18,20 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .mvcMatchers(
-                        "/", "/home","/products/**",
-                        "/prod/**","/meal/**","/meals/**",
-                        "/mealProperties/**","/createMeal/**","/start",
-                        "/add-prod"
-
-                ).permitAll()
-                .antMatchers(HttpMethod.POST).permitAll()
-                .antMatchers("/css/**").permitAll()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .and()
-                .logout().permitAll()
-                .and()
-                .csrf().disable();
-    }
+    protected void configure(HttpSecurity http) throws Exception
+        {
+            http.httpBasic().and().authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/**").permitAll()//hasAnyRole("MOD", "ADMIN", "USER")
+                    .antMatchers(HttpMethod.DELETE, "/**").permitAll()//hasRole("ADMIN")
+                    .and()
+                    .formLogin()
+                    .loginPage("/login").permitAll()
+                    .and()
+                    .logout().permitAll()
+                    .and()
+                    .csrf().disable();
+        }
 
     @Bean
     @Override
@@ -53,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user);
     }
 
-    @Bean
+        @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
