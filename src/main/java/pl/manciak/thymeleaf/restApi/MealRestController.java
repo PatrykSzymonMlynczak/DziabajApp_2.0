@@ -11,7 +11,7 @@ import pl.manciak.thymeleaf.Manager.MealManager;
 import pl.manciak.thymeleaf.payload.MealModel;
 
 @RestController
-@RequestMapping("/meals")
+@RequestMapping("/rest/meals")
 public class MealRestController {
 
     private MealManager mealManager;
