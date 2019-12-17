@@ -1,38 +1,57 @@
 package pl.manciak.thymeleaf.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.manciak.thymeleaf.entity.UserEntities.RoleName;
-import pl.manciak.thymeleaf.entity.UserEntities.Users;
+import pl.manciak.thymeleaf.entity.UserEntities.User;
 import pl.manciak.thymeleaf.exceptions.ResourceAlreadyExistsException;
-import pl.manciak.thymeleaf.exceptions.ResourceNotFoundException;
+import pl.manciak.thymeleaf.payload.UserData;
 import pl.manciak.thymeleaf.repository.UserRepo.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static pl.manciak.thymeleaf.entity.UserEntities.RoleName.*;
 
 @Service
-public class UserDataService {
-
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+public class UserDataService implements UserDetailsService {
 
     @Autowired
-    public UserDataService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(email);
+
+        if(user == null){
+            throw new UsernameNotFoundException(String.format("User with email : %s not found", email));
+        }
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                new ArrayList<>());
     }
 
-    public void save(Users user, RoleName role) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new ResourceAlreadyExistsException(String.format("User with email %s already exists", user.getEmail()));
+    public User save(UserData user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new ResourceAlreadyExistsException(String.format("User with email %s already exists", user.getUsername()));
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Collections.singleton(setUserRole(role)));
-        userRepository.save(user);
+        return userRepository.save(
+                new User(
+                    user.getUsername(),
+                    passwordEncoder.encode(user.getPassword()),
+                    Collections.singleton(setUserRole(USER))
+                )
+        );
     }
 
     private RoleName setUserRole(RoleName role){
@@ -49,28 +68,9 @@ public class UserDataService {
         }
     }
 
-    public Users findByEmail(String email) {
-        Users user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("User with email %s does not exists", email)));
-        return user;
-    }
 
-
-    public Users findById(Integer userID) {
-        Users user = userRepository.findById(userID)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("User with id %s does not exists", userID)));
-        return user;
-    }
-
-
-    public void deleteUser(String email) {
-        Users user = findByEmail(email);
-        userRepository.deleteById(user.getId());
-    }
-
-
-    public List<Users> findAll() {
-        List<Users> users= userRepository.findAll();
+    public List<User> findAll() {
+        List<User> users = userRepository.findAll();
         return users;
     }
 
