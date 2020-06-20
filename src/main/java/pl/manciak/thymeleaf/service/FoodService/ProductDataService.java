@@ -3,7 +3,7 @@ package pl.manciak.thymeleaf.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
-import pl.manciak.thymeleaf.entity.FoodEntities.Products;
+import pl.manciak.thymeleaf.entity.FoodEntities.Product;
 import pl.manciak.thymeleaf.repository.FoodRepo.ProductRepository;
 
 import java.util.Optional;
@@ -19,16 +19,16 @@ public class ProductDataService {
     }
 
 
-    public Optional<Products> findById(long id){
+    public Optional<Product> findById(long id){
         return productRepo.findById(id);
     }
 
-    public Optional<Products> findByName(String name)
+    public Optional<Product> findByName(String name)
     {
         return productRepo.findByName(name);
     }
 
-    public Iterable<Products> findAll(){
+    public Iterable<Product> findAll(){
         return productRepo.findAll();
     }
 
@@ -40,7 +40,7 @@ public class ProductDataService {
         productRepo.deleteByName(name);
     }
 
-    public Products save (Products product){
+    public Product save (Product product){
 
         return productRepo.save(product);
     }

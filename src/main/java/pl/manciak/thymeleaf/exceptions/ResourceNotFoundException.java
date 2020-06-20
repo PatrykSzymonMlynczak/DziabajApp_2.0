@@ -3,8 +3,7 @@ package pl.manciak.thymeleaf.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-///////////////////////////TO DO
-///////////////////////////TO DO
+///////////////////////////TODO
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {

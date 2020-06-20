@@ -2,7 +2,7 @@ package pl.manciak.thymeleaf.service.FoodService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.manciak.thymeleaf.entity.FoodEntities.Meals;
+import pl.manciak.thymeleaf.entity.FoodEntities.Meal;
 import pl.manciak.thymeleaf.repository.FoodRepo.MealRepository;
 
 
@@ -18,9 +18,9 @@ public class MealDataService {
         this.mealRepo = mealRepo;
     }
 
-    public Optional<Meals> findByName(String name){ return mealRepo.findByName(name);}
+    public Optional<Meal> findByName(String name){ return mealRepo.findByName(name);}
 
-    public Iterable<Meals> findAll(){return mealRepo.findAll();}
+    public Iterable<Meal> findAll(){return mealRepo.findAll();}
 
     public void deleteById(Long id){
         mealRepo.deleteById(id);
@@ -30,7 +30,7 @@ public class MealDataService {
         mealRepo.deleteByName(name);
     }
 
-    public Meals save (Meals meal){
+    public Meal save (Meal meal){
         return mealRepo.save(meal);
     }
 

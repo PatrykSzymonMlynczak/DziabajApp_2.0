@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.manciak.thymeleaf.Manager.ProductManager;
-import pl.manciak.thymeleaf.entity.FoodEntities.Products;
+import pl.manciak.thymeleaf.entity.FoodEntities.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,19 +37,19 @@ public class ManagerToControllerDataTransmission {
 
     @Test
     public void should_show_all_products() {
-        List<Products> products = (List) controller.showAllProducts().getBody();
+        List<Product> products = (List) controller.showAllProducts().getBody();
         Assert.assertThat(products, Matchers.hasSize(5));
     }
 
     @Test
     public void should_not_show_all_products() {
-        List<Products> products = (List) controller.showAllProducts().getBody();
+        List<Product> products = (List) controller.showAllProducts().getBody();
         Assert.assertNotEquals(products, Matchers.hasSize(6));
     }
 
     @Test
     public void should_not_show_all_products_cause_null_arg() {
-        List<Products> products = (List) controller.showAllProducts().getBody();
+        List<Product> products = (List) controller.showAllProducts().getBody();
         Assert.assertNotEquals(products, Matchers.hasSize(null));
     }
 
@@ -59,17 +59,17 @@ public class ManagerToControllerDataTransmission {
 ////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 
-    private List<Products> preparedMockData(){
-        List<Products> productList = new ArrayList<>();
-        productList.add(new Products("Marchew",1F,1F,1F,1F,1F));
-        productList.add(new Products("Mardchew",1F,1F,1F,1F,1F));
-        productList.add(new Products("Mardchew",1F,1F,1F,1F,1F));
-        productList.add(new Products("Mardchew",1F,1F,1F,1F,1F));
-        productList.add(new Products("Mardchew",1F,1F,1F,1F,1F));
+    private List<Product> preparedMockData(){
+        List<Product> productList = new ArrayList<>();
+        productList.add(new Product("Marchew",1F,1F,1F,1F,1F));
+        productList.add(new Product("Mardchew",1F,1F,1F,1F,1F));
+        productList.add(new Product("Mardchew",1F,1F,1F,1F,1F));
+        productList.add(new Product("Mardchew",1F,1F,1F,1F,1F));
+        productList.add(new Product("Mardchew",1F,1F,1F,1F,1F));
         return  productList;
     }
 
-    private List<Products> preparedNullData(){
+    private List<Product> preparedNullData(){
         return null;
     }
 }

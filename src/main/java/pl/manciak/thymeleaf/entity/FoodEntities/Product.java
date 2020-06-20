@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
-public class Products {
+public class Product {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,9 +27,9 @@ public class Products {
     private Float price;
 
 
-    public Products(){}
+    public Product(){}
 
-    public Products(String name, Float calories, Float carbohydrates, Float protein, Float fat, Float price ) {
+    public Product(String name, Float calories, Float carbohydrates, Float protein, Float fat, Float price ) {
         this.name = name;
         this.calories = calories;
         this.carbohydrates = carbohydrates;
@@ -96,7 +96,7 @@ public class Products {
 
     @Override
     public String toString() {
-        return "Products{" +
+        return "Product{" +
                 "product_ID=" + id +
                 ", name='" + name + '\'' +
                 ", calories=" + calories +

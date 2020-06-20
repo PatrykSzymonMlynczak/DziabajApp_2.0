@@ -10,9 +10,6 @@ import java.util.regex.Pattern;
 public class CheckEnteredValue {
 
 
-
-
-
     public static boolean checkIfNull(String checkedValue){
         if(checkedValue == null){
             throw new ResourceNotFoundException(String.format("Entered Value %d cannot be blank", checkedValue));

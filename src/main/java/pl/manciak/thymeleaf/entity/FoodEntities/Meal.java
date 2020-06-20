@@ -6,7 +6,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "meals")
-public  class Meals {
+public class Meal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
@@ -14,13 +14,16 @@ public  class Meals {
 
     private String name;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    private Map<Products, Quantity> productsWithQuantity;
+    //@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @ElementCollection()
+    @MapKeyColumn(name = "product" )
+    @Column(name = "qty")
+    @CollectionTable(name = "product_qty")
+    private Map<Product, Quantity> productsWithQuantity;
 
+    public Meal(){}
 
-    public Meals(){}
-
-    public Meals(String name, Map<Products, Quantity> productsWithQuantity) {
+    public Meal(String name, Map<Product, Quantity> productsWithQuantity) {
         this.name = name;
         this.productsWithQuantity = productsWithQuantity;
     }
@@ -33,21 +36,22 @@ public  class Meals {
         this.name = name;
     }
 
-    public Map<Products, Quantity> getProductsWithQuantity() {
+    public Map<Product, Quantity> getProductsWithQuantity() {
         return productsWithQuantity;
     }
 
-    public void setProductsWithQuantity(Map<Products, Quantity> productsWithQuantity) {
+    public void setProductsWithQuantity(Map<Product, Quantity> productsWithQuantity) {
         this.productsWithQuantity = productsWithQuantity;
     }
 
     @Override
     public String toString() {
-        return "Meals{" +
+        return "Meal{" +
                 "meal_ID=" + idMeal +
                 ", name='" + name + '\'' +
                 ", productsWithQuantity=" + productsWithQuantity +
                 '}';
     }
+
 }
 

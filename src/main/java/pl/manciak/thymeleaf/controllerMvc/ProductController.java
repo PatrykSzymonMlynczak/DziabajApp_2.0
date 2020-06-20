@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.manciak.thymeleaf.Manager.ProductManager;
-import pl.manciak.thymeleaf.entity.FoodEntities.Products;
+import pl.manciak.thymeleaf.entity.FoodEntities.Product;
 
 @Controller
 public class ProductController {
@@ -23,13 +23,13 @@ public class ProductController {
     public String prod(Model model){
 
         model.addAttribute("prods", productManager.getAllProducts());
-        model.addAttribute("newProd", new Products());
+        model.addAttribute("newProd", new Product());
 
         return "productsThy";
     }
 
     @PostMapping("/newProductThy")
-    public String addProd(@ModelAttribute Products product){
+    public String addProd(@ModelAttribute Product product){
 
            productManager.addProduct(product);
 
