@@ -3,6 +3,7 @@ package pl.manciak.thymeleaf.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -50,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception
         {
-        /*    http.httpBasic().and().authorizeRequests()
+            http.httpBasic().and().authorizeRequests()
                     .antMatchers(HttpMethod.GET, "/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/**").permitAll()//hasAnyRole("MOD", "ADMIN", "USER")
                     .antMatchers(HttpMethod.DELETE, "/**").permitAll()//hasRole("ADMIN")
@@ -61,15 +62,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .logout().permitAll()
                     .and()
-                    .csrf().disable();*/
+                    .csrf().disable();
 
             http.csrf().disable()
-
-                    .authorizeRequests().antMatchers("/authenticate", "/register", "/get").permitAll().
-
-                            anyRequest().authenticated().and().
-
-                            exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                    .authorizeRequests()
+                    .antMatchers("/authenticate", "/register", "/get")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                    .and()
+                    .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
