@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.manciak.thymeleaf.Manager.MealManager;
 import pl.manciak.thymeleaf.Manager.ProductManager;
-import pl.manciak.thymeleaf.entity.FoodEntities.Meal;
+import pl.manciak.thymeleaf.entity.FoodEntities.Meals;
 import pl.manciak.thymeleaf.payload.MealModel;
 import pl.manciak.thymeleaf.payload.NameQuantityModel;
 import pl.manciak.thymeleaf.payload.MealProperties;
@@ -36,7 +36,7 @@ public class MealController {
     @GetMapping("/mealsThy")
     public String meal(Model model) {
 
-        Iterable<Meal> mealList = mealManager.getAllMeals();
+        Iterable<Meals> mealList = mealManager.getAllMeals();
         model.addAttribute("mealList", mealList);
         model.addAttribute("properties", mealProperties);
 
@@ -68,6 +68,7 @@ public class MealController {
         if (productManager.findProductByName(nameQuantityModel.getProductName()).isEmpty()) {
             return "redirect:/createMeal";
         } else {
+
             if(! newMeal.containsKey(nameQuantityModel.getProductName()))
             {
                 newMeal.putIfAbsent(
@@ -75,6 +76,7 @@ public class MealController {
                         nameQuantityModel.getProductQuantity().toString());
             }
         }
+
         return "redirect:/createMeal";
     }
 
