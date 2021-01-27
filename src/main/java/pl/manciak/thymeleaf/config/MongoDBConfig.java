@@ -8,7 +8,7 @@ import pl.manciak.thymeleaf.repository.UserRepo.UserRepository;
 @Configuration
 public class MongoDBConfig {
 
-/*  @Beanh
+/*  @Bean
     CommandLineRunner commandLineRunner (UserRepository userRepository){
         return strings ->{
                 userRepository.save(new User(1,"sd", "swe","wffwf@gf.sd", "23r2f2", Collections.singleton(RoleName.USER)));

@@ -9,19 +9,31 @@ import java.util.Set;
 public class User {
 
     @Id
+    private String id;
+/*
+
+    public User(String id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+*/
+
     private String username;
 
     private String password;
 
+/*
     private Set<RoleName> role;
+*/
 
     public User(){}
 
-    public User(String username, String password, Set<RoleName> role) {
+    public User(String username, String password/*, Set<RoleName> role*/) {
 
         this.username = username;
         this.password = password;
-        this.role = role;
+        /*this.role = role;*/
     }
 
 
@@ -41,11 +53,13 @@ public class User {
         this.password = password;
     }
 
+
+/*
     public Set<RoleName> getRole() {
         return role;
     }
 
     public void setRole(Set<RoleName> role) {
         this.role = role;
-    }
+    }*/
 }

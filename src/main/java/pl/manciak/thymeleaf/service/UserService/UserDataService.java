@@ -48,8 +48,8 @@ public class UserDataService implements UserDetailsService {
         return userRepository.save(
                 new User(
                     user.getUsername(),
-                    passwordEncoder.encode(user.getPassword()),
-                    Collections.singleton(setUserRole(USER))
+                    passwordEncoder.encode(user.getPassword())/*,
+                    Collections.singleton(setUserRole(USER))*/
                 )
         );
     }
