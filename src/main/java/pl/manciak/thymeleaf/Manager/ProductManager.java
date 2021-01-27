@@ -42,7 +42,7 @@ public class ProductManager {
 
     public Product addProduct(Product product){
 
-        if(productDataService.findByName(product.getName()).isPresent())
+        if(!productDataService.findByName(product.getName()).isPresent())
         {
             return productDataService.save(product);
         }
