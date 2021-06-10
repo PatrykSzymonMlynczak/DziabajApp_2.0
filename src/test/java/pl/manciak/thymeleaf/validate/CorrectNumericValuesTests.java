@@ -8,7 +8,6 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class CorrectNumericValuesTests {
 
-    CheckEnteredValue checker = new CheckEnteredValue();
 
     @Parameterized.Parameters
     public static Object[] testData(){
@@ -25,7 +24,6 @@ public class CorrectNumericValuesTests {
 
     @Test()
     public void checkIfNumericCorrectTest() {
-        //Assert.assertTrue(checker.checkIfNumeric(testedValue));
         Assert.assertTrue(CheckEnteredValue.checkIfNumeric(testedValue));
     }
 

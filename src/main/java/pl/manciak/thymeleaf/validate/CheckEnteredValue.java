@@ -4,8 +4,7 @@ import pl.manciak.thymeleaf.exceptions.InvalidDataFormatException;
 import pl.manciak.thymeleaf.exceptions.ResourceNotFoundException;
 
 import java.util.regex.Pattern;
-//
-// Klasa dla testów jednostkowych
+
 
 public class CheckEnteredValue {
 
