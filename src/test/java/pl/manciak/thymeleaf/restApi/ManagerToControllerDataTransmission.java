@@ -56,8 +56,6 @@ public class ManagerToControllerDataTransmission {
     @Rule
     public ExpectedException thrown= ExpectedException.none();
 
-////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
 
     private List<Product> preparedMockData(){
         List<Product> productList = new ArrayList<>();

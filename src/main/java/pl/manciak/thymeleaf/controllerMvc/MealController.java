@@ -65,9 +65,9 @@ public class MealController {
 
         mealName = nameQuantityModel.getMealName();
 
-       /* if (productManager.findProductByName(nameQuantityModel.getProductName()).isEmpty()) {
+        if (productManager.findProductByName(nameQuantityModel.getProductName()).isEmpty()) {
             return "redirect:/createMeal";
-        } else {*/
+        } else {
 
             if(! newMeal.containsKey(nameQuantityModel.getProductName()))
             {
@@ -75,7 +75,7 @@ public class MealController {
                         nameQuantityModel.getProductName(),
                         nameQuantityModel.getProductQuantity().toString());
             }
-   /*     }*/
+        }
 
         return "redirect:/createMeal";
     }
@@ -86,7 +86,7 @@ public class MealController {
         mealModel.setNameMeal(mealName);
         mealModel.setMealModel(newMeal);
         mealManager.createMeal(mealModel);
-
+        newMeal.clear();
         return "redirect:/createMeal";
     }
 
